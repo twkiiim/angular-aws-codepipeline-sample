@@ -19,7 +19,10 @@ phases:
             - ng build --${BUILD_ENV}
     post_build:
          commands:
-            - aws s3 cp ${BUILD_FOLDER} s3://${S3_BUCKET} --recursive --acl public-read --cache-control "max-age=${CACHE_CONTROL}"
+            - aws s3 rm s3://${S3_BUCKET} --recursive
+            - echo Cleared AWS S3 project bucket
+            - aws s3 cp ${BUILD_FOLDER} s3://${S3_BUCKET} --recursive --cache-control "max-age=${CACHE_CONTROL}"
+            - aws s3api put-object-acl --bucket ${S3_BUCKET} --acl public-read
             - echo Build completed on `date`
 artifacts:
     files:
