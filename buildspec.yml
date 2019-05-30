@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "starting install phase..."
+      - npm install -g typescript
+      - echo "npm install typescript finished."
+  build:
+    commands:
+      - tsc index.ts
+artifacts:
+  files:
+    - index.js
